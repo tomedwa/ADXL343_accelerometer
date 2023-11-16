@@ -1,4 +1,20 @@
-// need header
+/*
+ **************************************************************
+ * ADXL343.c
+ * Author: Tom
+ * Date: 16/11/2023
+ * AVR Library for the ADXL343 Accelerometer. Communication can
+ * be done using I2C or SPI. For I2C use the i2cmaster.h
+ * library by Peter Fleury. For SPI use Atmega328p_SPI.h by me.
+ **************************************************************
+ * EXTERNAL FUNCTIONS
+ **************************************************************
+ * ADXL343_setup_axis_read() - Init for x, y, z axis reading.
+ * ADXL_343_get_axis_readings() - Read data in x, y, z data and
+ * store the result in the adxl_axis_readings array.
+ **************************************************************
+*/
+
 #include <avr/io.h>
 #include "ADXL343.h"
 
@@ -9,7 +25,13 @@
 #endif /* ADXL343_SPI_MODE */
 
 int32_t adxl_axis_readings[3] = {0, 0, 0};
-	
+
+/*
+ * ADXL343_setup_axis_read()
+ * -------------------------
+ * Initialise the ADXL343 sensor to read data from the x, y, z - axis. The specific
+ * initialisation steps depend on the communication protocol defined in the header (SPI or I2C).
+*/	
 void ADXL343_setup_axis_read() {
 	#ifdef ADXL343_SPI_MODE
 		/* SPI Comms */
@@ -42,6 +64,13 @@ void ADXL343_setup_axis_read() {
 	#endif /* ADXL343_SPI_MODE */
 }
 
+/*
+ * ADXL_343_get_axis_readings()
+ * -----------------------------
+ * Reads the x, y, and z axis data from the ADXL343 registers and stores the results
+ * in the adxl_axis_readings array. The specific read procedure depends on the
+ * communication protocol defined in the header file (SPI or I2C).
+ */
 void ADXL_343_get_axis_readings() {
 	uint8_t z0, z1;
 	uint8_t x0, x1;

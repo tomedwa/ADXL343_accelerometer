@@ -1,4 +1,19 @@
-//NEED HEADER
+/*
+ **************************************************************
+ * ADXL343.h
+ * Author: Tom
+ * Date: 16/11/2023
+ * AVR Library for the ADXL343 Accelerometer. Communication can
+ * be done using I2C or SPI. For I2C use the i2cmaster.h
+ * library by Peter Fleury. For SPI use Atmega328p_SPI.h by me.
+ **************************************************************
+ * EXTERNAL FUNCTIONS
+ **************************************************************
+ * ADXL343_setup_axis_read() - Init for x, y, z axis reading.
+ * ADXL_343_get_axis_readings() - Read data in x, y, z data and
+ * store the result in the adxl_axis_readings array.
+ **************************************************************
+*/
 
 #ifndef ADXL343_H_
 #define ADXL343_H_
