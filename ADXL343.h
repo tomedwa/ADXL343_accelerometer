@@ -1,20 +1,19 @@
-/*
- * ADXL343.h
- *
- * Created: 16/11/2023 1:58:58 PM
- *  Author: Tom
- */ 
-
+//NEED HEADER
 
 #ifndef ADXL343_H_
 #define ADXL343_H_
 
-#define ADXL343_SPI_MODE 1 // 1 for SPI, 0 for I2C
 
-#define READ		(1 << 7)
-#define WRITE		(0 << 7)
-#define MULTIBYTE	(1 << 6)
-#define SINGLEBYTE	(0 << 6)
+//#define ADXL343_SPI_MODE // defined = SPI, undefined = I2C
+
+#define I2C_ADDR	0x1D
+#define I2C_READ	1
+#define I2C_WRITE	0
+
+#define SPI_READ		(1 << 7)
+#define SPI_WRITE		(0 << 7)
+#define SPI_MULTIBYTE	(1 << 6)
+#define SPI_SINGLEBYTE	(0 << 6)
 
 // define register addresses
 #define X_DATA_0	0x32
