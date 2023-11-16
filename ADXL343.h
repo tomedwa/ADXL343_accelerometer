@@ -6,9 +6,9 @@
 
 //#define ADXL343_SPI_MODE // defined = SPI, undefined = I2C
 
-#define I2C_ADDR	0x1D
-#define I2C_READ	1
-#define I2C_WRITE	0
+#define I2C_ADDR	0x53 // Alt address pin low.
+#define I2C_READ_ADDR	(I2C_ADDR << 1) | 1
+#define I2C_WRITE_ADDR	(I2C_ADDR << 1) | 0
 
 #define SPI_READ		(1 << 7)
 #define SPI_WRITE		(0 << 7)
@@ -25,6 +25,7 @@
 #define BW_RATE		0x2C
 #define DATA_FORMAT	0x31
 #define POWER_CTL	0x2D
+#define FIFO_CTL	0x38
 
 extern int32_t adxl_axis_readings[3];
 

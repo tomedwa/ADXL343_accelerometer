@@ -13,29 +13,29 @@ int32_t adxl_axis_readings[3] = {0, 0, 0};
 void ADXL343_setup_axis_read() {
 	#ifdef ADXL343_SPI_MODE
 		/* SPI Comms */
-		A328p_SPI_transfer_data_to_reg(SPI_WRITE | SPI_SINGLEBYTE | BW_RATE, 0x0D);
+		A328p_SPI_transfer_data_to_reg(SPI_WRITE | SPI_SINGLEBYTE | BW_RATE,	 0x0D);
 		A328p_SPI_transfer_data_to_reg(SPI_WRITE | SPI_SINGLEBYTE | DATA_FORMAT, 0x07);
-		A328p_SPI_transfer_data_to_reg(SPI_WRITE | SPI_SINGLEBYTE | POWER_CTL, 0x08);
+		A328p_SPI_transfer_data_to_reg(SPI_WRITE | SPI_SINGLEBYTE | POWER_CTL,	 0x08);
 		return;
 	#else
 		/* I2C Comms */
-		i2c_start_wait(0xA6);
+		i2c_start_wait(I2C_WRITE_ADDR);
 		i2c_write(BW_RATE);
-		i2c_write(0x0B);
+		i2c_write(0x0D);
 		i2c_stop();
 		
-		i2c_start_wait(0xA6);
-		i2c_write(0x2D);
+		i2c_start_wait(I2C_WRITE_ADDR);
+		i2c_write(POWER_CTL);
 		i2c_write(0x08);
 		i2c_stop();
 		
-		i2c_start_wait(0xA6);
-		i2c_write(0x31);
-		i2c_write(0x0B);
+		i2c_start_wait(I2C_WRITE_ADDR);
+		i2c_write(DATA_FORMAT);
+		i2c_write(0x07);
 		i2c_stop();
 		
-		i2c_start_wait(0xA6);
-		i2c_write(0x38);
+		i2c_start_wait(I2C_WRITE_ADDR);
+		i2c_write(FIFO_CTL);
 		i2c_write(0x00);
 		i2c_stop();
 		return;
