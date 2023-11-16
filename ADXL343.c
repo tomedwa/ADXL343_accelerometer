@@ -71,7 +71,7 @@ void ADXL343_setup_axis_read() {
  * in the adxl_axis_readings array. The specific read procedure depends on the
  * communication protocol defined in the header file (SPI or I2C).
  */
-void ADXL_343_get_axis_readings() {
+void ADXL343_get_axis_readings() {
 	uint8_t z0, z1;
 	uint8_t x0, x1;
 	uint8_t y0, y1;

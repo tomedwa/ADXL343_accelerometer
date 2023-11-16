@@ -10,7 +10,7 @@
  * EXTERNAL FUNCTIONS
  **************************************************************
  * ADXL343_setup_axis_read() - Init for x, y, z axis reading.
- * ADXL_343_get_axis_readings() - Read data in x, y, z data and
+ * ADXL343_get_axis_readings() - Read data in x, y, z data and
  * store the result in the adxl_axis_readings array.
  **************************************************************
 */
@@ -45,6 +45,6 @@
 extern int32_t adxl_axis_readings[3];
 
 void ADXL343_setup_axis_read();
-void ADXL_343_get_axis_readings();
+void ADXL343_get_axis_readings();
 
 #endif /* ADXL343_H_ */
