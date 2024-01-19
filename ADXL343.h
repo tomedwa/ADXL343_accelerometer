@@ -10,8 +10,14 @@
  * EXTERNAL FUNCTIONS
  **************************************************************
  * ADXL343_setup_axis_read() - Init for x, y, z axis reading.
- * ADXL343_get_axis_readings() - Read data in x, y, z data and
+ * ADXL343_update_axis_readings() - Read data in x, y, z data and
  * store the result in the adxl_axis_readings array.
+ * ADXL343_get_x_axis_int() - return integer value of x-axis.
+ * ADXL343_get_y_axis_int() - return integer value of y-axis.
+ * ADXL343_get_z_axis_int() - return integer value of z-axis.
+ * ADXL343_get_x_axis_string() - return string value of x-axis.
+ * ADXL343_get_y_axis_string() - return string value of y-axis.
+ * ADXL343_get_z_axis_string() - return string value of z-axis.
  **************************************************************
 */
 
@@ -42,9 +48,16 @@
 #define POWER_CTL	0x2D
 #define FIFO_CTL	0x38
 
-extern int32_t adxl_axis_readings[3];
+int32_t adxl_axis_readings[3];
 
 void ADXL343_setup_axis_read();
-void ADXL343_get_axis_readings();
+void ADXL343_update_axis_readings();
+int32_t ADXL343_get_x_axis_int();
+int32_t ADXL343_get_y_axis_int();
+int32_t ADXL343_get_z_axis_int();
+
+char* ADXL343_get_x_axis_string();
+char* ADXL343_get_y_axis_string();
+char* ADXL343_get_z_axis_string();
 
 #endif /* ADXL343_H_ */
