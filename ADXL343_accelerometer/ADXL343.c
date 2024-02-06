@@ -25,22 +25,24 @@
 #include <stdio.h>
 #include "ADXL343.h"
 
+int32_t _adxl_axis_readings[3];
+
 #ifdef ADXL343_SPI_MODE
-	#include "Atmega328p_SPI.h"
+	#include "../Atmega328p_SPI/Atmega328p_SPI.h"
 #else
-	#include "i2cmaster.h"
+	#include "../pFleury_i2c_stuff/i2cmaster.h"
 #endif /* ADXL343_SPI_MODE */
 
 /*
  * ADXL343_setup_axis_read()
  * -------------------------
- * Initialise the ADXL343 sensor to read data from the x, y, z - axis. The specific
+ * External function that initialises the ADXL343 sensor to read data from the x, y, z - axis. The specific
  * initialisation steps depend on the communication protocol defined in the header (SPI or I2C).
 */	
 void ADXL343_setup_axis_read() {
-	adxl_axis_readings[0] = 0;
-	adxl_axis_readings[1] = 0;
-	adxl_axis_readings[2] = 0;
+	_adxl_axis_readings[0] = 0;
+	_adxl_axis_readings[1] = 0;
+	_adxl_axis_readings[2] = 0;
 	
 	#ifdef ADXL343_SPI_MODE
 		/* SPI Comms */
@@ -50,6 +52,8 @@ void ADXL343_setup_axis_read() {
 		return;
 	#else
 		/* I2C Comms */
+		i2c_init();
+		i2c_set_bitrate(ADXL343_I2C_BITRATE);
 		i2c_start_wait(I2C_WRITE_ADDR);
 		i2c_write(BW_RATE);
 		i2c_write(0x0D);
@@ -76,7 +80,7 @@ void ADXL343_setup_axis_read() {
 /*
  * ADXL_343_update_axis_readings()
  * -----------------------------
- * Reads the x, y, and z axis data from the ADXL343 registers and stores the results
+ * External function that reads the x, y, and z axis data from the ADXL343 registers and stores the results
  * in the adxl_axis_readings array. The specific read procedure depends on the
  * communication protocol defined in the header file (SPI or I2C).
  */
@@ -98,18 +102,19 @@ void ADXL343_update_axis_readings() {
 		z1 = A328p_SPI_receive_data_only();
 		SS_HIGH;
 	
-		// Combine all accelerometer data into integers
+		/* Combine all accelerometer data into integers */
 		x = (x1 << 8) | x0;
 		y = (y1 << 8) | y0;
 		z = (z1 << 8) | z0;
 	
-		adxl_axis_readings[0] = x;
-		adxl_axis_readings[1] = y;
-		adxl_axis_readings[2] = z;
+		_adxl_axis_readings[0] = x;
+		_adxl_axis_readings[1] = y;
+		_adxl_axis_readings[2] = z;
 	
 		return;
 	#else
 		/* I2C Comms */
+		i2c_set_bitrate(ADXL343_I2C_BITRATE);
 		i2c_start_wait(0xA6);
 		i2c_write(X_DATA_0);
 		i2c_rep_start(0xA7);
@@ -121,14 +126,14 @@ void ADXL343_update_axis_readings() {
 		z1 = i2c_readNak();
 		i2c_stop();
 		
-		// Combine all accelerometer data into integers
+		/* Combine all accelerometer data into integers */
  		x = (x1 << 8) | x0;
  		y = (y1 << 8) | y0;
  		z = (z1 << 8) | z0;
 		
-		adxl_axis_readings[0] = x;
- 		adxl_axis_readings[1] = y;
- 		adxl_axis_readings[2] = z;
+		_adxl_axis_readings[0] = x;
+ 		_adxl_axis_readings[1] = y;
+ 		_adxl_axis_readings[2] = z;
 		return;
 	#endif /* ADXL343_SPI_MODE */
 }
@@ -136,59 +141,53 @@ void ADXL343_update_axis_readings() {
 /*
 * ADXL343_get_x_axis_int()
 * --------------------------
-* Return last recorded value for the x axis as an integer.
+* External function that returns the last recorded value for the x axis as an integer.
 */
 int32_t ADXL343_get_x_axis_int() {
-	return adxl_axis_readings[0];
+	return _adxl_axis_readings[0];
 }
 
 /*
 * ADXL343_get_y_axis_int()
 * --------------------------
-* Return last recorded value for the y axis as an integer.
+* External function that returns the last recorded value for the y axis as an integer.
 */
 int32_t ADXL343_get_y_axis_int() {
-	return adxl_axis_readings[1];
+	return _adxl_axis_readings[1];
 }
 
 /*
 * ADXL343_get_z_axis_int()
 * --------------------------
-* Return last recorded value for the z axis as an integer.
+* External function that returns the last recorded value for the z axis as an integer.
 */
 int32_t ADXL343_get_z_axis_int() {
-	return adxl_axis_readings[2];
+	return _adxl_axis_readings[2];
 }
 
 /*
 * ADXL343_get_x_axis_string()
 * --------------------------
-* Return last recorded value for the x axis as a string.
+* External function that populates a given string with the last recorded value for the x axis as a string.
 */
-char* ADXL343_get_x_axis_string() {
-	static char temp[6];
-	snprintf(temp, sizeof(temp), "%ld", adxl_axis_readings[0]);
-	return temp;
+void ADXL343_get_x_axis_string(char string[6]) {
+	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[0]);
 }
 
 /*
 * ADXL343_get_y_axis_string()
 * --------------------------
-* Return last recorded value for the y axis as a string.
+* External function that populates a given string with the last recorded value for the y axis as a string.
 */
-char* ADXL343_get_y_axis_string() {
-	static char temp[6];
-	snprintf(temp, sizeof(temp), "%ld", adxl_axis_readings[1]);
-	return temp;
+void ADXL343_get_y_axis_string(char string[6]) {
+	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[1]);
 }
 
 /*
 * ADXL343_get_z_axis_string()
 * --------------------------
-* Return last recorded value for the z axis as a string.
+* External function that populates a given string with the last recorded value for the z axis as a string.
 */
-char* ADXL343_get_z_axis_string() {
-	static char temp[6];
-	snprintf(temp, sizeof(temp), "%ld", adxl_axis_readings[2]);
-	return temp;
+void ADXL343_get_z_axis_string(char string[6]) {
+	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[2]);
 }
