@@ -49,9 +49,6 @@
 #define POWER_CTL	0x2D
 #define FIFO_CTL	0x38
 
-/* Current axis readings will be stored here. */
-extern int32_t _adxl_axis_readings[3];
-
 void ADXL343_setup_axis_read();
 void ADXL343_update_axis_readings();
 

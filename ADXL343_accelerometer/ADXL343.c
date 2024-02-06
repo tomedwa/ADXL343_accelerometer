@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include "ADXL343.h"
 
-int32_t _adxl_axis_readings[3];
+/* Current axis readings will be stored here. */
+static int32_t _adxl_axis_readings[3];
 
 #ifdef ADXL343_SPI_MODE
 	#include "../Atmega328p_SPI/Atmega328p_SPI.h"
