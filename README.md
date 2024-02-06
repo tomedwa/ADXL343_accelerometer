@@ -8,7 +8,8 @@ file.
 Use of the SPI or I2C communication protocol can be configured in the ADXL343.h file. Near the top of
 the file there is this line of code:
 ```
-#define ADXL343_SPI_MODE // defined = SPI, undefined = I2C
+/* defined = SPI, undefined = I2C */
+#define ADXL343_SPI_MODE
 ```
 Leaving this line means the SPI protocol will be used. If this line is commented out, then the I2C
 protocol will be used.
@@ -28,4 +29,4 @@ while (1) {
   ADXL343_get_axis_readings();
 }
 ```
-Pretty much the same for I2C except do `i2c_init()` intead.
+Pretty much the same for I2C except do `i2c_init()` instead.
