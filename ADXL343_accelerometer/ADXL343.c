@@ -142,7 +142,8 @@ void ADXL343_update_axis_readings() {
 /*
 * ADXL343_get_x_axis_int()
 * --------------------------
-* External function that returns the last recorded value for the x axis as an integer.
+* External function that returns the last recorded value for the 
+* x axis as a a base 10 integer.
 */
 int32_t ADXL343_get_x_axis_int() {
 	return _adxl_axis_readings[0];
@@ -151,7 +152,8 @@ int32_t ADXL343_get_x_axis_int() {
 /*
 * ADXL343_get_y_axis_int()
 * --------------------------
-* External function that returns the last recorded value for the y axis as an integer.
+* External function that returns the last recorded value for the 
+* y axis as a base 10 integer.
 */
 int32_t ADXL343_get_y_axis_int() {
 	return _adxl_axis_readings[1];
@@ -160,7 +162,8 @@ int32_t ADXL343_get_y_axis_int() {
 /*
 * ADXL343_get_z_axis_int()
 * --------------------------
-* External function that returns the last recorded value for the z axis as an integer.
+* External function that returns the last recorded value for the 
+* z axis as a base 10 integer.
 */
 int32_t ADXL343_get_z_axis_int() {
 	return _adxl_axis_readings[2];
@@ -169,7 +172,8 @@ int32_t ADXL343_get_z_axis_int() {
 /*
 * ADXL343_get_x_axis_string()
 * --------------------------
-* External function that populates a given string with the last recorded value for the x axis as a string.
+* External function that populates a given string with the last recorded 
+* value for the x axis as a string.
 */
 void ADXL343_get_x_axis_string(char string[6]) {
 	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[0]);
@@ -178,7 +182,8 @@ void ADXL343_get_x_axis_string(char string[6]) {
 /*
 * ADXL343_get_y_axis_string()
 * --------------------------
-* External function that populates a given string with the last recorded value for the y axis as a string.
+* External function that populates a given string with the last recorded 
+* value for the y axis as a string.
 */
 void ADXL343_get_y_axis_string(char string[6]) {
 	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[1]);
@@ -187,7 +192,8 @@ void ADXL343_get_y_axis_string(char string[6]) {
 /*
 * ADXL343_get_z_axis_string()
 * --------------------------
-* External function that populates a given string with the last recorded value for the z axis as a string.
+* External function that populates a given string with the last recorded 
+* value for the z axis as a string.
 */
 void ADXL343_get_z_axis_string(char string[6]) {
 	snprintf(string, sizeof(string), "%ld", _adxl_axis_readings[2]);
